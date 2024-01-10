@@ -32,6 +32,55 @@ class HBNHCommand(cmd.Cmd):
         "Review": Review
     }
 
+    def default(self, line):
+        """
+        
+        """
+        match = re.match(r'^\w+\..*\)', line)
+        line_data = match.group()
+        if line_data:
+            if line_data.endswith("all()") or line_data.endswith("count()"):
+                class_name, command = line_data.strip("()").split(".")
+                # list of allowed commands that require no class attributes
+                valid_commands = {"all": self.do_all, "count": self.count}
+
+                if class_name in self.__valid_classes:
+                    if command in valid_commands:
+                        valid_commands[command](class_name)
+            elif line_data.endswith(')'):
+                # obtain class name with leftover data
+                class_name, class_data = line_data.rstrip(")").split(".")
+                # obtain command to execute with leftover class attributes
+                command, class_attributes = class_data.split("(")
+                # obtain individual attributes from a string of attributes
+                attributes = class_attributes.split(", ")
+                # list of allowed commands that require class attributes
+                valid_commands = {
+                    "show": self.do_show, "destroy": self.do_destroy,
+                    "update": self.do_update
+                }
+
+                if command in valid_commands:
+                    # UPDATE ONLY: checks if class attribute were passed or a dictionary representation
+                    if command == "update":
+                        if len(attributes):
+                            pass
+                        valid_commands[command](f"{class_name} {attributes[0]} {attributes[1]} {attributes[2]}")
+                            
+                    elif command != "update":
+                        valid_commands[command](f"{class_name} {attributes[0]}") 
+    def count(self, arg):
+        """
+        """
+        number_of_classes = 0
+        obj_dict = storage.all()
+        
+        for key in obj_dict:
+            name, obj_id = key.split(".")
+            if name == arg:
+                number_of_classes += 1
+        print("{:d}".format(number_of_classes))  
+        
     def do_quit(self, line):
         """
         Description - Exit the command interpreter.
@@ -106,7 +155,7 @@ class HBNHCommand(cmd.Cmd):
         [Usage] - show <class_name> <class_id>
         """
         # Store input in a list
-        class_data = line.split()
+        class_data = shlex.split(line)
 
         if self.validate_data(class_data):
             # Access the dictionary of stored objects.
@@ -128,7 +177,7 @@ class HBNHCommand(cmd.Cmd):
 
         [Usage] - destroy <class_name> <class_id>
         """
-        class_data = line.split()
+        class_data = shlex.split(line)
 
         if self.validate_data(class_data):
             # Acess dictionary of stored objects.
@@ -203,7 +252,7 @@ class HBNHCommand(cmd.Cmd):
                     obj_dict[key].save()
             else:
                 print("** no instance found **")
-
+        
     
 if __name__ == "__main__":
     HBNHCommand().cmdloop()
