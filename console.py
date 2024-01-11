@@ -44,6 +44,7 @@ class HBNHCommand(cmd.Cmd):
         like 'all()', 'count()', 'show()', 'destroy()', and 'update()', handling class instances
         and their attributes accordingly.
         """
+        # checks if string needs to be parsed
         match = re.match(r'^\w+\..*\)', line)
         if match:
             # store captured string
