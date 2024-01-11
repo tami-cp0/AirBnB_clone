@@ -34,6 +34,5 @@ ___
 ___
 This README should give potential contributors or users a better understanding of the knowledge required to work with my AirBnB console project.
 
-e-mail: <findtamilore@gmail.com>
-
-> Feel free to use, modify, and distribute it without any restriction. I appreciate, but don't require, acknowledgement in derivative works.
+**[Author](AUTHORS):** *Oluwatamilore Olugbesan* 
+**E-mail:** *<findtamilore@gmail.com>*
