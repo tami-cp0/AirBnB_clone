@@ -149,7 +149,7 @@ class HBNHCommand(cmd.Cmd):
                         file, and print the id of the created instance.
 
         Returns:
-            None
+            ID of the new instance
 
         [Usage] - create <class_name>
         """
@@ -172,7 +172,7 @@ class HBNHCommand(cmd.Cmd):
                         based on the class name and id.
 
         Returns:
-            None
+            Metadata of the class
 
         [Usage] - show <class_name> <class_id>
         """
@@ -218,9 +218,6 @@ class HBNHCommand(cmd.Cmd):
         """
         [Description] - Print all instances or all instances
                         of a specific class.
-
-        Returns:
-            None
 
         [Usage] - all or all <class_name>
         """
