@@ -1,7 +1,5 @@
 # **AirBnB clone - The console**
-
-![AirBnB Logo](https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/6/65f4a1dd9c51265f49d0.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20240111%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240111T112416Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=f7a3347e79b687a3e05554954d7cfc65f40d5ef7e63a76d25bf44238bd21f673)
-
+![Console Demo](IMAGES/hbnb_logo.png)
 ## **Project Description**
 
 This is the first part of the AirBnB clone project where I worked on creating the console. It is a sandbox that aims to manipulate data without a visual interface.
