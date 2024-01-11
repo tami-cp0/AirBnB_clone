@@ -34,11 +34,20 @@ class HBNHCommand(cmd.Cmd):
 
     def default(self, line):
         """
-        
+        Method called on an input line when the command prefix is not recognized.
+
+        Args:
+            line (str): The user input line to process.
+
+        This method interprets the user input, extracts class names, commands, and attributes,
+        and dispatches the corresponding actions based on predefined rules. It supports commands
+        like 'all()', 'count()', 'show()', 'destroy()', and 'update()', handling class instances
+        and their attributes accordingly.
         """
         match = re.match(r'^\w+\..*\)', line)
-        line_data = match.group()
-        if line_data:
+        if match:
+            # store captured string
+            line_data = match.group()
             if line_data.endswith("all()") or line_data.endswith("count()"):
                 class_name, command = line_data.strip("()").split(".")
                 # list of allowed commands that require no class attributes
@@ -52,48 +61,61 @@ class HBNHCommand(cmd.Cmd):
                 class_name, class_data = line_data.rstrip(")").split(".")
                 # obtain command to execute with leftover class attributes
                 command, class_attributes = class_data.split("(")
-                # obtain individual attributes from a string of attributes
-                attributes = class_attributes.split(", ")
+                # check if a dictionary was provided for do_update
+                match_data = re.match(r'(".*")\s*,\s*({.*})', class_attributes)
+                if match_data:
+                    attribute_1, attribute_2 = match_data.groups()
+                    attribute_3 = ""
+                else:
+                    attributes = class_attributes.split(", ")
+                    # assign an empty string if a certain attribute is omitted
+                    attribute_1 = attributes[0] if len(attributes) > 0 else ""
+                    attribute_2 = attributes[1] if len(attributes) > 1 else ""
+                    attribute_3 = attributes[2] if len(attributes) > 2 else ""
                 # list of allowed commands that require class attributes
                 valid_commands = {
                     "show": self.do_show, "destroy": self.do_destroy,
                     "update": self.do_update
                 }
-
                 if command in valid_commands:
-                    # UPDATE ONLY: checks if class attribute were passed or a dictionary representation
                     if command == "update":
-                        if len(attributes):
-                            pass
-                        valid_commands[command](f"{class_name} {attributes[0]} {attributes[1]} {attributes[2]}")
-                            
-                    elif command != "update":
-                        valid_commands[command](f"{class_name} {attributes[0]}") 
+                        valid_commands[command](
+                            f"{class_name} {attribute_1} "
+                            f"{attribute_2} {attribute_3}"
+                        )
+                    else:
+                        valid_commands[command](
+                            f"{class_name} {attribute_1} {attribute_2}"
+                        )
+        else:
+            pass
+
     def count(self, arg):
         """
+        counts the number of instances found
         """
         number_of_classes = 0
         obj_dict = storage.all()
-        
+
         for key in obj_dict:
             name, obj_id = key.split(".")
             if name == arg:
                 number_of_classes += 1
-        print("{:d}".format(number_of_classes))  
-        
+        print("{:d}".format(number_of_classes))
+
     def do_quit(self, line):
         """
-        Description - Exit the command interpreter.
+        [Description] - Exit the command interpreter.
 
-        Usage: quit
+        [Usage] - quit
         """
         return True
 
     def do_EOF(self, line):
         """
-        Description - Exit the command interpreter.
+        [Description] - Exit the command interpreter.
 
-        Usage: EOF (Ctrl+D on Unix/Linux, Ctrl+Z on Windows)
+        [Usage] - EOF (Ctrl+D on Unix/Linux, Ctrl+Z on Windows)
         """
         return True
 
@@ -230,20 +252,55 @@ class HBNHCommand(cmd.Cmd):
 
         Returns:
             None
-            
-        [Usage] - update <class_name> <class_id> <attribute_name> <attribute_value>
+
+        [Usage] - update <class_name> <class_id>
+                  <attribute_name> <attribute_value>
         """
-        class_data = shlex.split(line)
+        # checks if a dictionary representation of attributes was provided
+        match_data = re.match(r'^(\w+)\s+(.*)\s+({.+}).*', line)
+        if match_data:
+            # Initializes the class_data list with the first group
+            class_data = [match_data.group(1)]
+            #  use shlex to consider quotes and whitespace.
+            class_data.extend(shlex.split(match_data.group(2)))
+            # converts the string to a python object for use and append.
+            class_data.append(
+                json.loads(match_data.group(3).replace("'", "\""))
+            )
+        else:
+            class_data = shlex.split(line)
+
         if self.validate_data(class_data):
-            # Access the dictionary of stored objects.
+            # Access the dictionary of stored objects in file storage.
             obj_dict = storage.all()
             # Constructs access key
             key = f"{class_data[0]}.{class_data[1]}"
+
             # Checks if instance exists
             if key in obj_dict:
                 if len(class_data) == 2:
                     print("** attribute name missing **")
-                elif len(class_data) == 3:
+                    return
+
+                if isinstance(class_data[2], dict) and len(class_data) == 3:
+                    if class_data[2]:
+                        for k, v in class_data[2].items():
+                            if k:
+                                if v:
+                                    # Update the attribute with the new value
+                                    setattr(obj_dict[key], k, v)
+                                else:
+                                    print("** value missing **")
+                            else:
+                                print("** attribute name missing **")
+                    else:
+                        print("** attribute name missing **")
+
+                    # write changes to storage
+                    obj_dict[key].save()
+                    return
+
+                if len(class_data) == 3:
                     print("** value missing **")
                 else:
                     # Update the attribute with the new value
@@ -252,7 +309,7 @@ class HBNHCommand(cmd.Cmd):
                     obj_dict[key].save()
             else:
                 print("** no instance found **")
-        
-    
+
+
 if __name__ == "__main__":
     HBNHCommand().cmdloop()

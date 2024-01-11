@@ -88,8 +88,8 @@ class FileStorage:
             with open(self.__file_path, "r", encoding="utf-8") as json_file:
                 # Deserializes the file into a dictionary
                 obj_dict = json.load(json_file)
-                for key, value in obj_dict.items():
-                    class_name, class_id = key.split(".")
+                for k, value in obj_dict.items():
+                    class_name, class_id = k.split(".")
                     # globals() allows dynamic access to variables
                     # based on their names as strings.
-                    self.__objects[key] = self.__valid_class[class_name](**value)
+                    self.__objects[k] = self.__valid_class[class_name](**value)
