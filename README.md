@@ -5,7 +5,7 @@
 This is the first part of the AirBnB clone project where I worked on creating the console. It is a sandbox that aims to manipulate data without a visual interface.
 
 This is not a client side console, It will be used development and debugging.
-## Installation and Usage
+### Installation and Usage
 ___
 To install, compile and run the project, clone the repository using the following command:
 ```
