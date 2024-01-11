@@ -54,9 +54,8 @@ class HBNHCommand(cmd.Cmd):
                 # list of allowed commands that require no class attributes
                 valid_commands = {"all": self.do_all, "count": self.count}
 
-                if class_name in self.__valid_classes:
-                    if command in valid_commands:
-                        valid_commands[command](class_name)
+                if command in valid_commands:
+                    valid_commands[command](class_name)
             elif line_data.endswith(')'):
                 # obtain class name with leftover data
                 class_name, class_data = line_data.rstrip(")").split(".")
