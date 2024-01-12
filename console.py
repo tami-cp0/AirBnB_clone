@@ -31,6 +31,8 @@ class HBNHCommand(cmd.Cmd):
         "Place": Place,
         "Review": Review
     }
+    
+    __flag = 0
 
     def default(self, line):
         """
@@ -62,9 +64,20 @@ class HBNHCommand(cmd.Cmd):
                 # obtain command to execute with leftover class attributes
                 command, class_attributes = class_data.split("(")
                 # check if a dictionary was provided for do_update
-                match_data = re.match(r'(".*")\s*,\s*({.*})', class_attributes)
-                if match_data:
+                match_data = re.match(r'([a-zA-Z0-9-"]+)\s*,\s*({\S+\s*\S*}),?.*$', class_attributes)
+                a = None
+                try:
+                    # confirms if the string has a valid dictionary format
+                    attr_dict = json.loads(match_data.group(2).replace("'", "\""))
+                except:
+                    pass
+                if match_data and attr_dict is not None:
+                    attributes = None
                     attribute_1, attribute_2 = match_data.groups()
+                    match_remain = re.match(r'^.*},?\s+(\S.*)$', class_attributes)
+                    if match_remain:
+                        print(f"*** Unknown syntax {line}")
+                        return
                     attribute_3 = ""
                 else:
                     attributes = class_attributes.split(", ")
@@ -78,12 +91,19 @@ class HBNHCommand(cmd.Cmd):
                     "update": self.do_update
                 }
                 if command in valid_commands:
+                    self.__flag = 1
                     if command == "update":
+                        if attributes is not None and len(attributes) > 3:
+                            print(f"*** Unknown syntax {line}")
+                            return
                         valid_commands[command](
-                            f"{class_name} {attribute_1} "
-                            f"{attribute_2} {attribute_3}"
+                            f"{class_name}, {attribute_1}, "
+                            f"{attribute_2}, {attribute_3}"
                         )
                     else:
+                        if len(attributes) > 1:
+                            print(f"*** Unknown syntax {line}")
+                            return
                         valid_commands[command](
                             f"{class_name} {attribute_1} {attribute_2}"
                         )
@@ -254,8 +274,14 @@ class HBNHCommand(cmd.Cmd):
                   <attribute_name> <attribute_value>
         """
         # checks if a dictionary representation of attributes was provided
-        match_data = re.match(r'^(\w+)\s+(.*)\s+({.+}).*', line)
-        if match_data:
+        match_data = re.match(r'^\s*(\w+)\s*,\s*([a-zA-Z0-9-"]+)\s*,\s*({.*}),?', line)
+        a = None
+        try:
+            if match_data:
+                a = json.loads(match_data.group(3).replace("'", "\""))
+        except:
+            pass
+        if match_data and a is not None:
             # Initializes the class_data list with the first group
             class_data = [match_data.group(1)]
             #  use shlex to consider quotes and whitespace.
@@ -265,7 +291,11 @@ class HBNHCommand(cmd.Cmd):
                 json.loads(match_data.group(3).replace("'", "\""))
             )
         else:
-            class_data = shlex.split(line)
+            if self.__flag == 1:
+                class_data = [item.strip('"') for item in line.split(', ')]
+                self.__flag = 0
+            elif self.__flag == 0:
+                class_data = shlex.split(line)
 
         if self.validate_data(class_data):
             # Access the dictionary of stored objects in file storage.
@@ -275,7 +305,7 @@ class HBNHCommand(cmd.Cmd):
 
             # Checks if instance exists
             if key in obj_dict:
-                if len(class_data) == 2:
+                if len(class_data) == 2 or class_data[2] == "":
                     print("** attribute name missing **")
                     return
 
@@ -297,9 +327,11 @@ class HBNHCommand(cmd.Cmd):
                     obj_dict[key].save()
                     return
 
-                if len(class_data) == 3:
+                if len(class_data) == 3 or class_data[3] == "":
                     print("** value missing **")
+                    return
                 else:
+                    print("hello")
                     # Update the attribute with the new value
                     setattr(obj_dict[key], class_data[2], class_data[3])
                     # write changes to storage
