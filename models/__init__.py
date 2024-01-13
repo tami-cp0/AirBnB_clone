@@ -21,11 +21,6 @@ Version: 1.0
 from models.engine.file_storage import FileStorage
 
 
-__author__ = 'Oluwatamilore Olugbesan'
-
-# The list of modules to load
-__all__ = ["base_models"]
-
 # Create a unique FileStorage instance for the  application
 storage = FileStorage()
 
