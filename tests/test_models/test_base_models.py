@@ -25,7 +25,6 @@ class TestBaseModel(unittest.TestCase):
         # set up instance for testing
         global basemodel
         basemodel = BaseModel()
-        
 
     def tearDown(self):
         # Clean up after each test if needed
