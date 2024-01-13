@@ -9,7 +9,7 @@ import os
 from unittest.mock import patch
 from datetime import datetime
 from io import StringIO
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
 
@@ -17,14 +17,15 @@ class TestBaseModel(unittest.TestCase):
     """
     """
     def setUp(self):
-
-        global basemodel
-        basemodel = BaseModel()
         # Create new storage instance
         global test_storage
         test_storage = FileStorage()
         # change path so it does not affect my package json file
-        test_storage._FileStorage__file_path = "test_file.json"
+        FileStorage._FileStorage__file_path = "test_file.json"
+        # set up instance for testing
+        global basemodel
+        basemodel = BaseModel()
+        
 
     def tearDown(self):
         # Clean up after each test if needed

@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 from unittest.mock import patch
 from io import StringIO
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
 
