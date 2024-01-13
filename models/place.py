@@ -9,6 +9,7 @@ from .base_models import BaseModel
 
 class Place(BaseModel):
     """
+    asas
     """
     city_id = ""
     user_id = ""

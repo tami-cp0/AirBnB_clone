@@ -29,6 +29,8 @@ class BaseModel:
         save: Updates 'updated_at' and saves to storage.
         to_dict: Converts to a dictionary for serialization.
     """
+    # created just for unit testing
+    __time_format = '%Y-%m-%dT%H:%M:%S.%f'
 
     def __init__(self, *args, **kwargs):
         """
@@ -48,7 +50,7 @@ class BaseModel:
                 elif key in ['created_at', 'updated_at']:
                     setattr(
                         self, key, datetime.strptime(
-                            value, '%Y-%m-%dT%H:%M:%S.%f'
+                            value, self.__time_format
                             )
                     )
                     continue

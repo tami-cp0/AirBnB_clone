@@ -9,5 +9,6 @@ from .base_models import BaseModel
 
 class Amenity(BaseModel):
     """
+    kjj
     """
     name = ""

@@ -5,6 +5,9 @@ Console script for the hbnb command interpreter.
 
 
 import cmd
+import json
+import re
+import shlex
 from models.base_models import BaseModel
 from models.user import User
 from models.state import State
@@ -13,12 +16,13 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from models import storage
-import json
-import re
-import shlex
+
 
 
 class HBNHCommand(cmd.Cmd):
+    """
+    console
+    """
     # Set the custom prompt
     prompt = "(hbnb) "
     # Dictionary of valid classes
@@ -31,7 +35,7 @@ class HBNHCommand(cmd.Cmd):
         "Place": Place,
         "Review": Review
     }
-    
+    # 0 for command line input, 1 for default() input
     __flag = 0
 
     def default(self, line):
@@ -65,12 +69,11 @@ class HBNHCommand(cmd.Cmd):
                 command, class_attributes = class_data.split("(")
                 # check if a dictionary was provided for do_update
                 match_data = re.match(r'([a-zA-Z0-9-"]+)\s*,\s*({\S+\s*\S*}),?.*$', class_attributes)
-                a = None
                 try:
                     # confirms if the string has a valid dictionary format
                     attr_dict = json.loads(match_data.group(2).replace("'", "\""))
                 except:
-                    pass
+                    attr_dict = None
                 if match_data and attr_dict is not None:
                     attributes = None
                     attribute_1, attribute_2 = match_data.groups()
@@ -118,12 +121,12 @@ class HBNHCommand(cmd.Cmd):
         obj_dict = storage.all()
 
         for key in obj_dict:
-            name, obj_id = key.split(".")
+            name, _ = key.split(".")
             if name == arg:
                 number_of_classes += 1
-        print("{:d}".format(number_of_classes))
+        print(f"{number_of_classes}")
 
-    def do_quit(self, line):
+    def do_quit(self, _):
         """
         [Description] - Exit the command interpreter.
 
@@ -131,7 +134,7 @@ class HBNHCommand(cmd.Cmd):
         """
         return True
 
-    def do_EOF(self, line):
+    def do_EOF(self, _):
         """
         [Description] - Exit the command interpreter.
 
@@ -141,7 +144,7 @@ class HBNHCommand(cmd.Cmd):
 
     def emptyline(self):
         """Description - Do nothing on an empty line."""
-        pass
+
 
     def validate_data(self, class_data):
         """
@@ -152,11 +155,11 @@ class HBNHCommand(cmd.Cmd):
             print("** class name missing **")
             return False
         # Handles invalid class
-        elif class_data[0] not in self.__valid_classes:
+        if class_data[0] not in self.__valid_classes:
             print("** class doesn't exist **")
             return False
         # Handle missing id
-        elif len(class_data) < 2:
+        if len(class_data) < 2:
             print("** instance id missing **")
             return False
 
@@ -273,13 +276,62 @@ class HBNHCommand(cmd.Cmd):
         [Usage] - update <class_name> <class_id>
                   <attribute_name> <attribute_value>
         """
+        class_data = self.update_support(line)
+
+        if self.validate_data(class_data):
+            # Access the dictionary of stored objects in file storage.
+            obj_dict = storage.all()
+            # Constructs access key
+            key = f"{class_data[0]}.{class_data[1]}"
+
+            # Checks if instance exists
+            if key in obj_dict:
+                if len(class_data) == 2 or class_data[2] == "":
+                    print("** attribute name missing **")
+                    return
+                # sets the attributes if a dict was passed
+                HBNHCommand.update_dict(class_data, obj_dict, key)
+        
+                if len(class_data) == 3 or class_data[3] == "":
+                    print("** value missing **")
+                    return
+                else:
+                    # Update the attribute with the new value
+                    setattr(obj_dict[key], class_data[2], class_data[3])
+                    # write changes to storage
+                    obj_dict[key].save()
+            else:
+                print("** no instance found **")
+                
+            
+                
+    #Support methods for do_update
+    def update_support(self, line: str):
+        """
+        Update support method to process and extract data from the input line.
+
+        Parameters:
+        - line (str): The input line containing information to be processed.
+
+        Returns:
+        - class_data (list): A list containing processed data.
+
+        Note:
+        - The method uses regular expressions and JSON parsing to catch a
+          dictonary representation. If a dictionary representation of
+          attributes is provided in the input line, it is extracted and
+          converted to a Python object.
+        - The method handles different cases for extracting data based on
+          if the data is coming from command line or from default method
+        - The result is a list, 'class_data', containing the processed data.
+        """
         # checks if a dictionary representation of attributes was provided
         match_data = re.match(r'^\s*(\w+)\s*,\s*([a-zA-Z0-9-"]+)\s*,\s*({.*}),?', line)
         a = None
         try:
             if match_data:
                 a = json.loads(match_data.group(3).replace("'", "\""))
-        except:
+        except FileNotFoundError:
             pass
         if match_data and a is not None:
             # Initializes the class_data list with the first group
@@ -296,48 +348,37 @@ class HBNHCommand(cmd.Cmd):
                 self.__flag = 0
             elif self.__flag == 0:
                 class_data = shlex.split(line)
+        return class_data
+                
+    @staticmethod           
+    def update_dict(class_data: dict, obj_dict: dict, obj_key: str):
+        """
+        Static method to update attributes of an object's dictionary representation.
 
-        if self.validate_data(class_data):
-            # Access the dictionary of stored objects in file storage.
-            obj_dict = storage.all()
-            # Constructs access key
-            key = f"{class_data[0]}.{class_data[1]}"
+        Parameters:
+        - class_data (dict): A list containing attribute information to be updated.
+        - obj_dict (dict): A dictionary representing the object with attributes to be updated.
+        - obj_key (str): The key identifying the object in obj_dict.
 
-            # Checks if instance exists
-            if key in obj_dict:
-                if len(class_data) == 2 or class_data[2] == "":
-                    print("** attribute name missing **")
-                    return
-
-                if isinstance(class_data[2], dict) and len(class_data) == 3:
-                    if class_data[2]:
-                        for k, v in class_data[2].items():
-                            if k:
-                                if v:
-                                    # Update the attribute with the new value
-                                    setattr(obj_dict[key], k, v)
-                                else:
-                                    print("** value missing **")
-                            else:
-                                print("** attribute name missing **")
+        Returns:
+        - None
+        """
+        if isinstance(class_data[2], dict) and len(class_data) == 3:
+            if class_data[2]:
+                for k, v in class_data[2].items():
+                    if k:
+                        if v:
+                            # Update the attribute with the new value
+                            setattr(obj_dict[obj_key], k, v)
+                        else:
+                            print("** value missing **")
                     else:
                         print("** attribute name missing **")
-
-                    # write changes to storage
-                    obj_dict[key].save()
-                    return
-
-                if len(class_data) == 3 or class_data[3] == "":
-                    print("** value missing **")
-                    return
-                else:
-                    print("hello")
-                    # Update the attribute with the new value
-                    setattr(obj_dict[key], class_data[2], class_data[3])
-                    # write changes to storage
-                    obj_dict[key].save()
             else:
-                print("** no instance found **")
+                print("** attribute name missing **")
+            # write changes to storage
+            obj_dict[obj_key].save()
+            return
 
 
 if __name__ == "__main__":
