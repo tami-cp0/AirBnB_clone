@@ -18,7 +18,6 @@ from models.review import Review
 from models import storage
 
 
-
 class HBNHCommand(cmd.Cmd):
     """
     console
@@ -40,15 +39,17 @@ class HBNHCommand(cmd.Cmd):
 
     def default(self, line):
         """
-        Method called on an input line when the command prefix is not recognized.
+        Method called on an input line when
+        the command prefix is not recognized.
 
         Args:
             line (str): The user input line to process.
 
-        This method interprets the user input, extracts class names, commands, and attributes,
-        and dispatches the corresponding actions based on predefined rules. It supports commands
-        like 'all()', 'count()', 'show()', 'destroy()', and 'update()', handling class instances
-        and their attributes accordingly.
+        This method interprets the user input, extracts class names,
+        commands, and attributes, and dispatches the corresponding
+        actions based on predefined rules. It supports commands like
+        'all()', 'count()', 'show()', 'destroy()', and 'update()',
+        handling class instances and their attributes accordingly.
         """
         # checks if string needs to be parsed
         match = re.match(r'^\w+\..*\)', line)
@@ -68,16 +69,23 @@ class HBNHCommand(cmd.Cmd):
                 # obtain command to execute with leftover class attributes
                 command, class_attributes = class_data.split("(")
                 # check if a dictionary was provided for do_update
-                match_data = re.match(r'([a-zA-Z0-9-"]+)\s*,\s*({\S+\s*\S*}),?.*$', class_attributes)
+                match_data = re.match(
+                    r'([a-zA-Z0-9-"]+)\s*,\s*({\S+\s*\S*}),?.*$',
+                    class_attributes
+                )
                 try:
                     # confirms if the string has a valid dictionary format
-                    attr_dict = json.loads(match_data.group(2).replace("'", "\""))
-                except:
+                    attr_dict = json.loads(
+                        match_data.group(2).replace("'", "\"")
+                    )
+                except json.JSONDecodeError:
                     attr_dict = None
                 if match_data and attr_dict is not None:
                     attributes = None
                     attribute_1, attribute_2 = match_data.groups()
-                    match_remain = re.match(r'^.*},?\s+(\S.*)$', class_attributes)
+                    match_remain = re.match(
+                        r'^.*},?\s+(\S.*)$', class_attributes
+                    )
                     if match_remain:
                         print(f"*** Unknown syntax {line}")
                         return
@@ -144,7 +152,6 @@ class HBNHCommand(cmd.Cmd):
 
     def emptyline(self):
         """Description - Do nothing on an empty line."""
-
 
     def validate_data(self, class_data):
         """
@@ -291,7 +298,7 @@ class HBNHCommand(cmd.Cmd):
                     return
                 # sets the attributes if a dict was passed
                 HBNHCommand.update_dict(class_data, obj_dict, key)
-        
+
                 if len(class_data) == 3 or class_data[3] == "":
                     print("** value missing **")
                     return
@@ -302,10 +309,8 @@ class HBNHCommand(cmd.Cmd):
                     obj_dict[key].save()
             else:
                 print("** no instance found **")
-                
-            
-                
-    #Support methods for do_update
+
+    # Support methods for do_update
     def update_support(self, line: str):
         """
         Update support method to process and extract data from the input line.
@@ -326,7 +331,9 @@ class HBNHCommand(cmd.Cmd):
         - The result is a list, 'class_data', containing the processed data.
         """
         # checks if a dictionary representation of attributes was provided
-        match_data = re.match(r'^\s*(\w+)\s*,\s*([a-zA-Z0-9-"]+)\s*,\s*({.*}),?', line)
+        match_data = re.match(
+            r'^\s*(\w+)\s*,\s*([a-zA-Z0-9-"]+)\s*,\s*({.*}),?', line
+        )
         a = None
         try:
             if match_data:
@@ -349,15 +356,18 @@ class HBNHCommand(cmd.Cmd):
             elif self.__flag == 0:
                 class_data = shlex.split(line)
         return class_data
-                
-    @staticmethod           
+
+    @staticmethod
     def update_dict(class_data: dict, obj_dict: dict, obj_key: str):
         """
-        Static method to update attributes of an object's dictionary representation.
+        Static method to update attributes of an
+        object's dictionary representation.
 
         Parameters:
-        - class_data (dict): A list containing attribute information to be updated.
-        - obj_dict (dict): A dictionary representing the object with attributes to be updated.
+        - class_data (dict): A list containing attribute information
+          to be updated.
+        - obj_dict (dict): A dictionary representing the object with
+          attributes to be updated.
         - obj_key (str): The key identifying the object in obj_dict.
 
         Returns:
