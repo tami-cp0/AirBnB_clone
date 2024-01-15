@@ -59,7 +59,7 @@ class TestBaseModel(unittest.TestCase):
 
             self.assertEqual(
                 f"[{basemodel.__class__.__name__}] ({basemodel.id}) "
-                f"<{basemodel.__dict__}>\n",
+                f"{basemodel.__dict__}\n",
                 printed_output
             )
 
