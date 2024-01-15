@@ -78,7 +78,7 @@ class HBNHCommand(cmd.Cmd):
                     attr_dict = json.loads(
                         match_data.group(2).replace("'", "\"")
                     )
-                except json.JSONDecodeError:
+                except:
                     attr_dict = None
                 if match_data and attr_dict is not None:
                     attributes = None
