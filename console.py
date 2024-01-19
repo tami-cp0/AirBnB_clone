@@ -321,16 +321,7 @@ class HBNHCommand(cmd.Cmd):
         Returns:
         - class_data (list): A list containing processed data.
 
-        Note:
-        - The method uses regular expressions and JSON parsing to catch a
-          dictonary representation. If a dictionary representation of
-          attributes is provided in the input line, it is extracted and
-          converted to a Python object.
-        - The method handles different cases for extracting data based on
-          if the data is coming from command line or from default method
-        - The result is a list, 'class_data', containing the processed data.
         """
-        # checks if a dictionary representation of attributes was provided
         match_data = re.match(
             r'^\s*(\w+)\s*,\s*([a-zA-Z0-9-"]+)\s*,\s*({.*}),?', line
         )
