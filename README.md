@@ -1,12 +1,22 @@
-# **AirBnB clone - The console**
+# **AirBnB clone**
 ![Console Demo](IMAGES/hbnb_logo.png)
-## **Project Description**
+___
+> Project pathway:
+![pathway](IMAGES/hbnb_steps.png)
+___
+## Table of Contents
+>  2/7 complete
+- [The Console](#console)
+- [The Web Static](#web-static)
+
+___
+## Console
+### **Description**
 
 This is the first part of the AirBnB clone project where I worked on creating the console. It is a sandbox that aims to manipulate data without a visual interface.
 
 This is not a client side console, It will be used development and debugging.
 ### Installation and Usage
-___
 To install, compile and run the project, clone the repository using the following command:
 ```
 git clone https://github.com/tami-cp0/AirBnB_clone.git
@@ -20,8 +30,8 @@ cd AirBnB_clone && ./console.py
 
 ### Console Demo
 ![Console Demo](IMAGES/console_demo2.png)
+
 ### Operations
-___
 > These are the current implemented functionalities:
 -  `all` - Print all instances or all instances of a specific class.
 -  `create` - Create a new instance of a specified class
@@ -32,7 +42,13 @@ ___
 -  `show` - Prints the string representation of an instance
 -  `update` - Update attributes of an instance
 ___
-This README should give potential contributors or users a better understanding of the knowledge required to work with my AirBnB console project.
+## Web Static
+### **Description**
+This is the second part of the AirBnB clone project where I worked on developing the static components of a website. These only include HTML and CSS that contribute to the visual presentation and layout of a web page including [images](images/).
+
+**Curent template:**
+![Web Demo](IMAGES/site_demo.png)
+___
 
 **[Author](AUTHORS):** *Oluwatamilore Olugbesan* 
 **E-mail:** *<findtamilore@gmail.com>*
