@@ -24,3 +24,10 @@
         opacity: 0.9;
     }
 }
+
+@media screen and (max-width: 1000px) {
+    .filters {
+        width: 99%;
+        margin: auto;
+    }
+} 

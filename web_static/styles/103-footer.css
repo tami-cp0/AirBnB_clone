@@ -8,10 +8,3 @@ footer {
     line-height: 60px;
     border-top: 1px solid #CCCCCC;
 }
-
-.footer_3,
-.footer_4,
-.footer_5,
-.footer_6 {
-    position: fixed;
-}

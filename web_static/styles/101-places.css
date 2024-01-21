@@ -1,0 +1,192 @@
+.places {
+    position: relative;
+    z-index: -1;
+}
+
+.places h1 {
+    font-size: 30px;
+    padding-left: 15px;
+}
+
+.places-article {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: -25px;
+}
+
+.places article {
+    width: 390px;
+    padding: 20px;
+    padding-bottom: 0;
+    margin: 20px;
+    border: 1px solid #FF5A5F;
+    border-radius: 4px;
+    text-align: center;
+    height: auto;
+}
+
+.places article > h2 {
+    font-size: 30px;
+    position: relative;
+    bottom: 25px;
+}
+
+.places article .price_by_night {
+    min-width: 60px;
+    height: 60px;
+    color: #FF5A5F;
+    border: 4px solid  #FF5A5F;
+    text-align: center;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    bottom: 86px;
+    left: 151px;
+    padding: 10px;
+}
+
+.places article .price_by_night h2{
+    font-size: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+
+.places article .information {
+    height: 80px;
+    border-top: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+    position: relative;
+    margin: 0;
+    bottom: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.information .max_guest {
+    background: url('/AirBnB_clone/web_static/images/guest_icon.png') 26px -5px no-repeat;
+    margin: 0;
+    width: 100px;
+    padding-top: 40px;
+}
+
+.information .number_rooms {
+    background: url('/AirBnB_clone/web_static/images/bed_icon.png') 27px -5px no-repeat;
+    margin: 0;
+    width: 100px;
+    padding-top: 40px;
+}
+
+.information .number_bathrooms {
+    background: url('/AirBnB_clone/web_static/images/bath_icon.png') 27px -5px no-repeat;
+    margin: 0;
+    width: 100px;
+    padding-top: 40px;
+}
+
+.places article .user {
+    position: relative;
+    bottom: 60px;
+    margin: 0;
+    text-align: left;
+}
+
+.places article .description {
+    text-align: left;
+    position: relative;
+    bottom: 65px;
+    margin: 0;
+}
+
+
+.places .amenities {
+    top: -80px;
+    margin-top: 40px;
+    position: relative;
+    width: 100%;
+    text-align: left;
+    height: 160px;
+
+}
+
+.places .amenities h2 {
+    font-size: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.places .amenities ul {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.places .amenities ul li {
+    list-style-type: none;
+    margin: 5px;
+    position: relative;
+    right: 46px;
+    padding: 3px;
+    padding-left: 35px;
+}
+
+.places .amenities ul li:nth-child(1) {
+    background: url('/AirBnB_clone/web_static/images/tv_icon.png') -2px -2px no-repeat;
+    background-size: 7%;
+}
+.places .amenities ul li:nth-child(2) {
+    background: url('/AirBnB_clone/web_static/images/wifi_icon.png') -2px -2px no-repeat;
+    background-size: 7%;
+}
+.places .amenities ul li:nth-child(3) {
+    background: url('/AirBnB_clone/web_static/images/pet_icon.png') -2px -2px no-repeat;
+    background-size: 7%;
+}
+
+.places .reviews {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    margin-top: 40px;
+    bottom: 80px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+}
+
+.places .reviews h2 {
+    width: 100%;
+    font-size: 16px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+
+.places .reviews ul {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    position: relative;
+
+}
+.places .reviews ul li {
+    position: relative;
+    list-style-type: none;
+    margin-top: -10px;
+}
+
+.places .reviews ul li h3 {
+    position: relative;
+    font-size: 14px;
+}
+
+.places .reviews ul li p {
+    position: relative;
+    font-size: 12px;
+}

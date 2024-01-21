@@ -26,6 +26,13 @@
     }
 }
 
+@media screen and (max-width: 1000px) {
+    .filters {
+        width: 99%;
+        margin: auto;
+    }
+} 
+
 .amenities {
     height: 100%;
     width: 25%;
