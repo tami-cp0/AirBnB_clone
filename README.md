@@ -1,7 +1,7 @@
 # **AirBnB clone**
 ![Console Demo](IMAGES/hbnb_logo.png)
 ___
-> Project pathway:
+> **Project pathway:**
 ![pathway](IMAGES/hbnb_steps.png)
 ___
 ## Table of Contents
