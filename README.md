@@ -15,9 +15,9 @@ ___
 
 This is the first part of the AirBnB clone project where I worked on creating the console. It is a sandbox that aims to manipulate data without a visual interface.
 
-This is not a client side console, It will be used development and debugging.
+This is not a client side console, It will be used for development and debugging.
 ### Installation and Usage
-To install, compile and run the project, clone the repository using the following command:
+To install, clone the repository using the following command:
 ```
 git clone https://github.com/tami-cp0/AirBnB_clone.git
 ```
@@ -44,11 +44,11 @@ cd AirBnB_clone && ./console.py
 ___
 ## Web Static
 ### **Description**
-This is the second part of the AirBnB clone project where I worked on developing the static components of a website. These only include HTML and CSS that contribute to the visual presentation and layout of a web page including [images](images/).
+This is the second part of the AirBnB clone project where I worked on developing the static components of a website. These only include HTML and CSS that contribute to the visual presentation and layout of a web page.
 
 **Curent template:**
 ![Web Demo](IMAGES/site_demo.png)
 ___
 
-**[Author](AUTHORS):** *Oluwatamilore Olugbesan* 
+**[Author](AUTHORS):** *Oluwatamilore Olugbesan*
 **E-mail:** *<findtamilore@gmail.com>*
