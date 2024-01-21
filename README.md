@@ -46,7 +46,7 @@ ___
 ### **Description**
 This is the second part of the AirBnB clone project where I worked on developing the static components of a website. These only include HTML and CSS that contribute to the visual presentation and layout of a web page.
 
-**Curent template:**
+**Curent design:**
 ![Web Demo](IMAGES/site_demo.png)
 ___
 
