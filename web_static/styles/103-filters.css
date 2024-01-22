@@ -128,7 +128,7 @@
 /**/
 @media only screen and (max-width : 1024px) {
     .filters {
-        width: 90%;
+        width: 92%;
         margin: 0 auto;
     }
 }
@@ -139,7 +139,7 @@
     }
 
     .locations .popover li h2 {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .locations h3,
