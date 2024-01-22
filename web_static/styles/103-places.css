@@ -4,8 +4,9 @@
 }
 
 .places h1 {
+    position: relative;
     font-size: 30px;
-    padding-left: 15px;
+    padding-left: 5%;
 }
 
 .places-article {
@@ -189,4 +190,24 @@
 .places .reviews ul li p {
     position: relative;
     font-size: 12px;
+}
+
+
+/* mobile phones */
+@media only screen and (max-width: 480px) {
+    .places article .price_by_night {
+        left: 120px;
+        height: 45px;
+        min-width: 45px;
+    }
+
+}
+
+/*tablets and ipads*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .places article .price_by_night {
+        left: 151px;
+        height: 60px;
+        min-width: 60px;
+    }
 }
