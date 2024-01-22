@@ -66,21 +66,21 @@
 }
 
 .information .max_guest {
-    background: url('/AirBnB_clone/web_static/images/guest_icon.png') 26px -5px no-repeat;
+    background: url('../images/guest_icon.png') 26px -5px no-repeat;
     margin: 0;
     width: 100px;
     padding-top: 40px;
 }
 
 .information .number_rooms {
-    background: url('/AirBnB_clone/web_static/images/bed_icon.png') 27px -5px no-repeat;
+    background: url('../images/bed_icon.png') 27px -5px no-repeat;
     margin: 0;
     width: 100px;
     padding-top: 40px;
 }
 
 .information .number_bathrooms {
-    background: url('/AirBnB_clone/web_static/images/bath_icon.png') 27px -5px no-repeat;
+    background: url('../images/bath_icon.png') 27px -5px no-repeat;
     margin: 0;
     width: 100px;
     padding-top: 40px;

@@ -68,21 +68,21 @@
 }
 
 .information .max_guest {
-    background: url('/AirBnB_clone/web_static/images/guest_icon.png') 26px -5px no-repeat;
+    background: url('../images/guest_icon.png') 26px -5px no-repeat;
     margin: 0;
     width: 100px;
     padding-top: 40px;
 }
 
 .information .number_rooms {
-    background: url('/AirBnB_clone/web_static/images/bed_icon.png') 27px -5px no-repeat;
+    background: url('../images/bed_icon.png') 27px -5px no-repeat;
     margin: 0;
     width: 100px;
     padding-top: 40px;
 }
 
 .information .number_bathrooms {
-    background: url('/AirBnB_clone/web_static/images/bath_icon.png') 27px -5px no-repeat;
+    background: url('../images/bath_icon.png') 27px -5px no-repeat;
     margin: 0;
     width: 100px;
     padding-top: 40px;
@@ -136,15 +136,15 @@
 }
 
 .places .amenities ul li:nth-child(1) {
-    background: url('/AirBnB_clone/web_static/images/tv_icon.png') -2px -2px no-repeat;
+    background: url('../images/tv_icon.png') -2px -2px no-repeat;
     background-size: 7%;
 }
 .places .amenities ul li:nth-child(2) {
-    background: url('/AirBnB_clone/web_static/images/wifi_icon.png') -2px -2px no-repeat;
+    background: url('../images/wifi_icon.png') -2px -2px no-repeat;
     background-size: 7%;
 }
 .places .amenities ul li:nth-child(3) {
-    background: url('/AirBnB_clone/web_static/images/pet_icon.png') -2px -2px no-repeat;
+    background: url('../images/pet_icon.png') -2px -2px no-repeat;
     background-size: 7%;
 }
 
