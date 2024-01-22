@@ -193,7 +193,7 @@
 
 
 /* mobile phones */
-@media screen and (max-width: 500px) {
+@media screen and (min-device-width: 480px) {
     .places h1 {
         font-size: 30px;
         padding-left: 20px;
@@ -201,6 +201,8 @@
 
     .places article .price_by_night {
         left: 120px;
+        height: 45px;
+        min-width: 45px;
     }
 
 }

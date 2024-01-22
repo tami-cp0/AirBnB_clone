@@ -125,7 +125,7 @@
 
 
 /* mobile phones */
-@media screen and (max-width: 500px) {
+@media screen and (min-device-width: 480px) {
     .filters {
         width: 90%;
         margin: 0 auto;
@@ -145,4 +145,8 @@
         margin-left: 20px;
     }
 
-} 
+    .container .amenities .popover {
+        padding-left: 25%;
+    }
+
+}
