@@ -29,13 +29,6 @@
     }
 }
 
-@media screen and (max-width: 1000px) {
-    .filters {
-        width: 95%;
-        margin: 0 auto;
-    }
-} 
-
 .container .amenities {
     height: 100%;
     width: 25%;
@@ -128,3 +121,28 @@
 .container .amenities:hover .popover {
     display: flex;
 }
+
+
+
+/* mobile phones */
+@media screen and (max-width: 500px) {
+    .filters {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .filters button {
+        font-size: 16px;
+    }
+
+    .locations h3,
+    .container .amenities h3 {
+        margin-left: 20px;
+    }
+    .locations h4,
+    .container .amenities h4  {
+        font-size: 12px;
+        margin-left: 20px;
+    }
+
+} 

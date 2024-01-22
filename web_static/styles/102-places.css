@@ -190,3 +190,17 @@
     position: relative;
     font-size: 12px;
 }
+
+
+/* mobile phones */
+@media screen and (max-width: 500px) {
+    .places h1 {
+        font-size: 30px;
+        padding-left: 20px;
+    }
+
+    .places article .price_by_night {
+        left: 120px;
+    }
+
+}
