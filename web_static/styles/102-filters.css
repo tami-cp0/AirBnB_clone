@@ -29,7 +29,7 @@
     }
 }
 
-.container .amenities {
+.filters .amenities {
     height: 100%;
     width: 25%;
     display: flex;
@@ -87,20 +87,19 @@
 .locations .popover li:first-child h2{
     margin-bottom: 0;
     margin-top: -6%;
-    padding-left: 15%;
+    padding-left: 20%;
 }
 .locations .popover li:nth-child(2) h2 {
     margin-bottom: 0;
-    padding-left: 15%;
+    padding-left: 20%;
 }
 
 .locations .popover li ul {
     list-style-type: none;
-    padding-left: 25%;
+    padding-left: 30%;
 }
 
-
-.container .amenities .popover {
+.amenities .popover {
     border: 1px solid #DDDDDD;
     border-radius: 4px;
     background-color: #FAFAFA;
@@ -110,11 +109,15 @@
     width: 100%;
     height: 110px;
     margin: 0;
-    padding-left: 15%;
+    padding-left: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     display: none;
+}
+
+.amenities .popover li {
+    padding-left: 20%;
 }
 
 .locations:hover .popover,
@@ -122,31 +125,59 @@
     display: flex;
 }
 
-
-
-/* mobile phones */
-@media screen and (min-device-width: 480px) {
+/**/
+@media only screen and (max-width : 1024px) {
     .filters {
         width: 90%;
         margin: 0 auto;
     }
-
+}
+/* Mobile phones */
+@media only screen and (max-width : 480px) {
     .filters button {
         font-size: 16px;
     }
 
+    .locations .popover li h2 {
+        font-size: 18px;
+    }
+
     .locations h3,
-    .container .amenities h3 {
+    .filters .amenities h3 {
         margin-left: 20px;
     }
     .locations h4,
-    .container .amenities h4  {
+    .filters .amenities h4  {
         font-size: 12px;
         margin-left: 20px;
     }
 
-    .container .amenities .popover {
-        padding-left: 25%;
+    .filters .amenities .popover {
+        padding-left: 0; 
     }
 
+    .amenities .popover li {
+        padding-left: 15%;
+    }
+
+    .filters .amenities {
+        margin-right: 40%;
+        width: 35%;
+    }
+}
+
+/*tablets and ipads*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+    .filters .amenities .popover {
+        margin-left: -1px;
+        padding-left: 0;
+    }
+    .amenities .popover li{
+        padding-left: 27%;
+    }
+
+    .locations .popover li {
+        padding-left: 10%;
+    }
 }
